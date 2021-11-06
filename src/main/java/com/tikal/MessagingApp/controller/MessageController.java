@@ -1,6 +1,7 @@
 package com.tikal.MessagingApp.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tikal.MessagingApp.model.Message;
+import com.tikal.MessagingApp.model.util.MessageComparator;
 
 
 @RestController
@@ -32,6 +34,7 @@ public class MessageController {
 		if (userMsgMap!=null && userMsgMap.containsKey(recipient)) {
 			List<Message> msgList = userMsgMap.get(recipient);
 			if (msgList!=null && !msgList.isEmpty()) {
+				Collections.sort(msgList, new MessageComparator());
 				return new ResponseEntity<>(msgList, HttpStatus.OK);
 			}
 		}

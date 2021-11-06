@@ -1,14 +1,16 @@
 package com.tikal.MessagingApp.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
-@XmlRootElement(name = "message")
-public class Message {
+public class Message{
 	private static int instanceCounter = 0;
-	
+	public static final String msgDateFormat = "dd/MM/yy HH:mm:ss";
+
 	private final int minLength = 1;
 	private final int nameMaxLength = 25;
 	private final int msgMaxLength = 5000;
@@ -27,7 +29,8 @@ public class Message {
 	@Size(min=minLength, max=msgMaxLength, message = "msgContent possible length is " + minLength + "-" + msgMaxLength + " characters")
 	private String msgContent;
 	
-	
+	private String msgDate;
+
 	public Message(String sender, String recipient, String msgContent) {
 		super();
 		synchronized(this){
@@ -37,17 +40,16 @@ public class Message {
 		this.sender = sender;
 		this.recipient = recipient;
 		this.msgContent = msgContent;
+		
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(msgDateFormat);
+		this.msgDate = now.format(formatter);
 	}
 
 
 	public int getMsgId() {
 		return msgId;
 	}
-
-	public void setMsgId(int msgId) {
-		this.msgId = msgId;
-	}
-
 
 	public String getSender() {
 		return sender;
@@ -78,9 +80,14 @@ public class Message {
 	}
 
 
+	public String getMsgDate() {
+		return msgDate;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Message [msgMaxLength=" + msgMaxLength + ", msgId=" + msgId + ", sender=" + sender + ", recipient="
-				+ recipient + ", msgContent=" + msgContent + "]";
+		return "Message [msgId=" + msgId + ", sender=" + sender + ", recipient=" + recipient + ", msgContent="
+				+ msgContent + ", msgDate=" + msgDate + "]";
 	}
 }
