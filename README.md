@@ -17,3 +17,8 @@ Body:
     "recipient" : "{recipient_name}",
     "msgContent" : "{message_content}"
 }
+
+
+
+-----------------
+*At first I created a User Object, with id, name, email, etc. But for simplicity I cancel it and used only names. I assume that sender and recipient names are unique, like userName at other platforms.
